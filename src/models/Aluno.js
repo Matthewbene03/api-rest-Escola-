@@ -10,7 +10,7 @@ class Aluno extends Model {
       peso: Sequelize.FLOAT,
       altura: Sequelize.FLOAT,
     }, {
-      sequelize,
+      sequelize, //Recebe a conexão com o banco
     })
     return this;
   }

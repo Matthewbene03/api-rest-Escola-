@@ -1,11 +1,11 @@
 //import {Router} from "express"; Outro exemplo
 import express from "express";
-import homeController from "../controller/HomeController";
+import userController from "../controller/UserController";
 
 const router = express.Router();
 
-//Rotas para a home
-router.get("/", homeController.index);
+//Rotas para a User
+router.post("/", userController.createUser);
 
 export default router;
 
