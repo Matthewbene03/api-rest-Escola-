@@ -12,9 +12,13 @@
   "description": "",
   "devDependencies": {
     "nodemon": "^3.1.11",
+    "sequelize-cli": "^6.6.5",
     "sucrase": "^3.35.1"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mariadb": "^3.4.5",
+    "sequelize": "^6.37.7"
   }
 }

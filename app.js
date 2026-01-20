@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+dotenv.config(); //Para usar configurações do arquivo .env
+
+import "./src/database"
 import express from "express";
 import homeRouter from "./src/routes/homeRoutes";
 
