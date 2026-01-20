@@ -6,6 +6,10 @@ const router = express.Router();
 
 //Rotas para a User
 router.post("/", userController.createUser);
+router.get("/", userController.index);
+router.get("/:id", userController.show);
+router.put("/:id", userController.updateUser);
+router.delete("/:id", userController.deleteUser);
 
 export default router;
 
