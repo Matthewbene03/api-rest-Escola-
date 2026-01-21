@@ -5,12 +5,16 @@ import loginRequired from "../middlewares/loginRequired";
 
 const router = express.Router();
 
+//Não deveria existir
+router.get("/", userController.index);
+router.get("/:id", userController.show);
+
 //Rotas para a User
 router.post("/", userController.createUser);
-router.get("/", loginRequired, userController.index);
-router.get("/:id", userController.show);
-router.put("/:id", userController.updateUser);
-router.delete("/:id", userController.deleteUser);
+
+//Atravez do loginRequired, sabe qual usuario está logado no sistema e somente esse usuario vai poder atualizar e deletar
+router.put("/", loginRequired, userController.updateUser); //Um usuário pode editar os seus dados e nao de outros. Não usar /:id para não editar todos os usuários
+router.delete("/", loginRequired, userController.deleteUser); //Um usuário pode deletar os seus dados e nao de outros. Não usar /:id para não deletar todos os usuários
 
 export default router;
 
