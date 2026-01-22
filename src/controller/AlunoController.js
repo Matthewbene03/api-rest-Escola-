@@ -6,9 +6,10 @@ class AlunoController {
   //Método para criar usuário no banco de dados
   async createAluno(req, res) {
     try {
+      console.log(req.body);
       const novoAluno = await Aluno.create(req.body);
-      const {id, nome, email} = novoAluno;
-      res.json({id, nome, email});
+      const { id, nome, sobrenome, email, idade, peso, altura } = novoAluno;
+      res.json({ id, nome, sobrenome, email, idade, peso, altura });
     } catch (e) {
       console.log(e);
       res.status(400).json(
@@ -21,7 +22,7 @@ class AlunoController {
   //Método para buscar todos os usuário no banco de dados
   async index(req, res) {
     try {
-      const novoAluno = await Aluno.findAll(); //Busca todos e retorna apenas esses atributos
+      const novoAluno = await Aluno.findAll({attributes: ["id", "nome", "sobrenome", "email", "idade", "peso", "altura"]}); //Busca todos e retorna apenas esses atributos
       return res.json(novoAluno);
     } catch (e) {
       console.log(e);
@@ -43,7 +44,7 @@ class AlunoController {
         });
       };
 
-      const novoAluno = await Aluno.findByPk(idParams);
+      const novoAluno = await Aluno.findByPk(idParams); //Procura um aluno no BD apartir do id informado na url
 
       if (!novoAluno) { //Se não tiver um usuário no BD
         return res.status(400).json({
@@ -51,9 +52,8 @@ class AlunoController {
         });
       };
 
-      const { id, nome, email } = novoAluno
-
-      res.json({ id, nome, email });
+      const { id, nome, sobrenome, email, idade, peso, altura } = novoAluno;
+      res.json({ id, nome, sobrenome, email, idade, peso, altura });
     } catch (e) {
       console.log(e);
       res.status(400).json(
@@ -66,17 +66,25 @@ class AlunoController {
   //Método para atualizar um usuário no banco de dados
   async updateAluno(req, res) {
     try {
-      const Aluno = await Aluno.findByPk(req.AlunoId);
+      const idParams = req.params.id;
 
-      if (!Aluno) { //Se não tiver um usuário no BD
+      if (!idParams) { //Se não tem id nos parametros da URL
+        return res.status(400).json({
+          errors: ["Informe um id!"]
+        });
+      };
+
+      const aluno = await Aluno.findByPk(idParams);
+
+      if (!aluno) { //Se não tiver um usuário no BD
         return res.status(400).json({
           errors: ["Não existe um usuário com esse id!"]
         });
       };
 
-      const novoAluno = await Aluno.update(req.body);
-      const {id, nome, email} = novoAluno;
-      res.json({id, nome, email});
+      const novoAluno = await aluno.update(req.body);
+      const { id, nome, sobrenome, email, idade, peso, altura } = novoAluno;
+      res.json({ id, nome, sobrenome, email, idade, peso, altura });
     } catch (e) {
       console.log(e);
       res.status(400).json(
@@ -89,15 +97,23 @@ class AlunoController {
   //Método para deletar um usuário os usuário no banco de dados
   async deleteAluno(req, res) {
     try {
-      const novoAluno = await Aluno.findByPk(req.AlunoId);
+      const idParams = req.params.id;
 
-      if (!novoAluno) { //Se não tiver um usuário no BD
+      if (!idParams) { //Se não tem id nos parametros da URL
+        return res.status(400).json({
+          errors: ["Informe um id!"]
+        });
+      };
+
+      const aluno = await Aluno.findByPk(idParams);
+
+      if (!aluno) { //Se não tiver um usuário no BD
         return res.status(400).json({
           errors: ["Não existe um usuário com esse id!"]
         });
       };
 
-      await novoAluno.destroy();
+      await aluno.destroy();
       return res.json(null);
     } catch (e) {
       console.log(e);
