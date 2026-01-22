@@ -6,6 +6,7 @@ import express from "express";
 import homeRouter from "./src/routes/homeRoutes";
 import userRouter from "./src/routes/userRoutes";
 import tokenRouter from "./src/routes/tokenRoutes";
+import alunoRouter from "./src/routes/alunoRoutes";
 
 class App{
   constructor(){
@@ -23,6 +24,7 @@ class App{
     this.app.use("/", homeRouter) // Toda requisição que começar em "/" será tratada pelas rotas definidas em homeRouter
     this.app.use("/users", userRouter) // Toda requisição que começar em "/" será tratada pelas rotas definidas em userRouter
     this.app.use("/tokens", tokenRouter) // Toda requisição que começar em "/" será tratada pelas rotas definidas em userRouter
+    this.app.use("/alunos", alunoRouter) // Toda requisição que começar em "/" será tratada pelas rotas definidas em userRouter
   }
 };
 
