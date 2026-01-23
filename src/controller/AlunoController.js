@@ -1,4 +1,5 @@
 import Aluno from "../models/Aluno";
+import Foto from "../models/Foto";
 
 class AlunoController {
   constructor() { }
@@ -22,7 +23,15 @@ class AlunoController {
   //Método para buscar todos os usuário no banco de dados
   async index(req, res) {
     try {
-      const novoAluno = await Aluno.findAll({attributes: ["id", "nome", "sobrenome", "email", "idade", "peso", "altura"]}); //Busca todos e retorna apenas esses atributos
+      const novoAluno = await Aluno.findAll(
+        {
+          attributes: ["id", "nome", "sobrenome", "email", "idade", "peso", "altura"], //Mostra apenas esses atributos
+          order: [["id", "ASC"], [Foto, "id", "DESC"]], //Ordena os dados
+          include: {
+            model: Foto,
+            attributes: ["filename"],
+          }
+        }); //Busca todos e retorna apenas esses atributos
       return res.json(novoAluno);
     } catch (e) {
       console.log(e);
@@ -44,7 +53,15 @@ class AlunoController {
         });
       };
 
-      const novoAluno = await Aluno.findByPk(idParams); //Procura um aluno no BD apartir do id informado na url
+      const novoAluno = await Aluno.findByPk(idParams,
+        {
+          attributes: ["id", "nome", "sobrenome", "email", "idade", "peso", "altura"], //Mostra apenas esses atributos
+          order: [["id", "ASC"], [Foto, "id", "DESC"]], //Ordena os dados
+          include: {
+            model: Foto,
+            attributes: ["filename"],
+          }
+        }); //Procura um aluno no BD apartir do id informado na url
 
       if (!novoAluno) { //Se não tiver um usuário no BD
         return res.status(400).json({
@@ -52,8 +69,7 @@ class AlunoController {
         });
       };
 
-      const { id, nome, sobrenome, email, idade, peso, altura } = novoAluno;
-      res.json({ id, nome, sobrenome, email, idade, peso, altura });
+      res.json(novoAluno);
     } catch (e) {
       console.log(e);
       res.status(400).json(

@@ -37,7 +37,7 @@ class Aluno extends Model {
         type: Sequelize.INTEGER,
         defaultValue: 0,
         validate: {
-          isInt:{
+          isInt: {
             msg: "A idade precisa ser um numero inteiro!",
           }
         }
@@ -64,6 +64,11 @@ class Aluno extends Model {
       sequelize, //Recebe a conexão com o banco
     })
     return this;
+  }
+
+  //Associação do model Foto com Aluno
+  static associate(models) {
+    this.hasMany(models.Foto, { foreignKey: "aluno_id" });
   }
 };
 

@@ -10,7 +10,7 @@ router.get("/", userController.index);
 router.get("/:id", userController.show);
 
 //Rotas para a User
-router.post("/", userController.createUser);
+router.post("/", loginRequired, userController.createUser);
 
 //Atravez do loginRequired, sabe qual usuario está logado no sistema e somente esse usuario vai poder atualizar e deletar
 router.put("/", loginRequired, userController.updateUser); //Um usuário pode editar os seus dados e nao de outros. Não usar /:id para não editar todos os usuários

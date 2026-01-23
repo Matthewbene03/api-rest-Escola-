@@ -1,15 +1,13 @@
+//Rota apenas para receber fotos/uploades
+
 //import {Router} from "express"; Outro exemplo
 import express from "express";
-import multer from "multer";
-
 import fotoController from "../controller/FotosController";
-import multerConfig from "../config/mouterConfig";
+import loginRequired from "../middlewares/loginRequired";
 
-const upload = multer(multerConfig);
 const router = express.Router();
 
-//Rotas para a home
-router.post("/", upload.single("arquivo"), fotoController.createFotos);
+router.post("/", loginRequired, fotoController.createFotos); //Usa o upload como middelewres e "single" serve para receber um arquivo. "arquivo" é o nome do campo que o arquivo está sendo enviado
 
 export default router;
 
