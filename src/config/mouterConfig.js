@@ -15,7 +15,7 @@ export default {
   },
   storage: multer.diskStorage({ // Diz ao Multer que os arquivos serão salvos no disco.
     destination: (req, file, cb) => { //Lugar que vai salvar o arquivo. cb do proprio multer
-      cb(null, resolve(__dirname, "..", "..", "uploads")); //Recebe um erro e o caminho da pasta de destino
+      cb(null, resolve(__dirname, "..", "..", "uploads", "image")); //Recebe um erro e o caminho da pasta de destino
     },
     filename: (req, file, cb) => { //Seria para mudar o nome de um arquivo
       cb(null, `${Date.now()}_${aleatorio()}${extname(file.originalname)}`) //Da um renomear no nome do arquivo passando ser a data em ms e com a extensao do arquivo

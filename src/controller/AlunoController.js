@@ -29,7 +29,7 @@ class AlunoController {
           order: [["id", "ASC"], [Foto, "id", "DESC"]], //Ordena os dados
           include: {
             model: Foto,
-            attributes: ["filename"],
+            attributes: ["url", "filename"],
           }
         }); //Busca todos e retorna apenas esses atributos
       return res.json(novoAluno);
@@ -59,7 +59,7 @@ class AlunoController {
           order: [["id", "ASC"], [Foto, "id", "DESC"]], //Ordena os dados
           include: {
             model: Foto,
-            attributes: ["filename"],
+            attributes: ["url", "filename"],
           }
         }); //Procura um aluno no BD apartir do id informado na url
 

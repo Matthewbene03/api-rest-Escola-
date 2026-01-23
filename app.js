@@ -3,6 +3,8 @@ dotenv.config(); //Para usar configurações do arquivo .env
 
 import "./src/database"
 import express from "express";
+import {resolve} from "path";
+
 import homeRouter from "./src/routes/homeRoutes";
 import userRouter from "./src/routes/userRoutes";
 import tokenRouter from "./src/routes/tokenRoutes";
@@ -19,6 +21,7 @@ class App{
   middlewres(){
     this.app.use(express.urlencoded({ extended: true })); //serve para ler dados enviados pelo formulário (POST)
     this.app.use(express.json()); // Ler e interpretar requisições com corpo em JSON.
+    this.app.use(express.static(resolve(__dirname, "uploads"))); // Ler e interpretar requisições com corpo em JSON.
   }
 
   routes(){
