@@ -4,6 +4,8 @@ dotenv.config(); //Para usar configurações do arquivo .env
 import "./src/database"
 import express from "express";
 import {resolve} from "path";
+import cors from 'cors';
+import helmet from 'helmet';
 
 import homeRouter from "./src/routes/homeRoutes";
 import userRouter from "./src/routes/userRoutes";
@@ -11,6 +13,19 @@ import tokenRouter from "./src/routes/tokenRoutes";
 import alunoRouter from "./src/routes/alunoRoutes";
 import fotoRouter from "./src/routes/fotoRoutes";
 
+const whiteList = [
+  "http://localhost:3001"
+];
+
+const corsOptions = {
+  origin: function(origin, callback){
+    if(whiteList.indexOf(origin) !== -1 || !origin){
+      callback(null, true);
+    }else{
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
+}
 class App{
   constructor(){
     this.app = express(); //Inicializa o express
@@ -19,6 +34,8 @@ class App{
   }
 
   middlewres(){
+    this.app.use(cors(corsOptions)); //
+    this.app.use(helmet()); //
     this.app.use(express.urlencoded({ extended: true })); //serve para ler dados enviados pelo formulário (POST)
     this.app.use(express.json()); // Ler e interpretar requisições com corpo em JSON.
     this.app.use(express.static(resolve(__dirname, "uploads"))); // Ler e interpretar requisições com corpo em JSON.
